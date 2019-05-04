@@ -25,10 +25,22 @@ const MEMBERS: Member[] = [
     <h2>社員一覧</h2>
     <ul class="members">
 <!--      *ngForで配列の中身を1件1件出力-->
-      <li *ngFor="let member of members">
+<!--      [class.selected]="member === selectedMember でclass付与の条件指定(属性のデータバインディング) classのselectedを付与-->
+      <li *ngFor="let member of members" (click)="onSelect(member)"
+        [class.selected]="member === selectedMember">
         <span class="badge">{{member.id}}</span>{{member.name}}
       </li>
     </ul>
+<!--    表示の出し分け-->
+    <div *ngIf="selectedMember">
+      <h2>{{selectedMember.name}}</h2>
+      <div><label>id: </label>{{selectedMember.id}}
+      </div>
+      <div>
+        <label>name: </label>
+        <input type="text" [(ngModel)]="selectedMember.name" placeholder="名前">
+      </div>
+    </div>
   `,
   styles: [`
     .selected {
@@ -83,4 +95,9 @@ const MEMBERS: Member[] = [
 export class AppComponent {
   title = '自社社員名簿';
   members = MEMBERS;
+  selectedMember: Member;
+
+  onSelect(member: Member): void {
+    this.selectedMember = member;
+  }
 }
