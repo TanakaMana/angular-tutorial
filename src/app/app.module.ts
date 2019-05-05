@@ -6,6 +6,7 @@ import { FormsModule} from '@angular/forms';
 import { RouterModule} from '@angular/router';
 
 import { AppComponent }  from './app.component';
+import { DashboardComponent} from './dashboard.component';
 import { MemberDetailComponent} from './member-detail.component';
 import { MembersComponent} from './members.component';
 import { MemberService } from './member.service';
@@ -15,18 +16,29 @@ import { MemberService } from './member.service';
     BrowserModule,
     FormsModule,
     RouterModule.forRoot([
+      // rootへのリダイレクト設定
+      {
+        path: '',
+        redirectTo: '/dashboard',
+        pathMatch: 'full'
+      },
       {
         // path membersにアクセスしたとき、MembersComponentを呼ぶ
         path: 'members',
         component: MembersComponent
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent
       }
     ])
   ],
   // 自作したディレクティブ・コンポーネント・パイプはすべてdeclarationsに登録
   declarations: [
     AppComponent,
+    DashboardComponent,
     MemberDetailComponent,
-    MembersComponent
+    MembersComponent,
   ],
   bootstrap:    [
     AppComponent
