@@ -8,7 +8,8 @@ import { MemberService } from './member.service';
 @Component({
   // <member-detail></member-detail>
   selector: 'member-detail',
-  templateUrl: './member-detail.component.html'
+  templateUrl: './member-detail.component.html',
+  styleUrls: ['./member-detail.component.css']
 })
 // exportのおかげで外部参照可能
 export class MemberDetailComponent implements OnInit {
