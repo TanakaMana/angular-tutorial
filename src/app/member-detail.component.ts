@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location} from '@angular/common';
 import 'rxjs/add/operator/switchMap';
@@ -13,8 +13,7 @@ import { MemberService } from './member.service';
 })
 // exportのおかげで外部参照可能
 export class MemberDetailComponent implements OnInit {
-  // 外部ファイルのMemberを引き継ぐ。Input moduleが必要
-  @Input() member: Member;
+  member: Member;
 
   constructor(
     private memberService: MemberService,
@@ -28,7 +27,7 @@ export class MemberDetailComponent implements OnInit {
       .switchMap((param: ParamMap) => {
         return this.memberService.getMember(+param.get('id'));
       })
-      .subscribe(member => this.member);
+      .subscribe(member => this.member = member);
   }
 
   goBack(): void {
