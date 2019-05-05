@@ -91,6 +91,6 @@ export class MembersComponent implements OnInit {
   getMembers(): void {
     // thenはPromiseの非同期処理完了後に実行されるコールバック
     // 引数でmembersが渡ってきて、this.membersに代入
-    this.memberService.getMember().then(members => this.members = members);
+    this.memberService.getMembers().then(members => this.members = members);
   }
 }

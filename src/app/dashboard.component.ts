@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
   members: Member[];
   constructor(private memberService: MemberService) {}
   ngOnInit() {
-    this.memberService.getMember()
+    this.memberService.getMembers()
       .then(members => this.members = members.slice(1, 5));
   }
 }

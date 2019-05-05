@@ -6,7 +6,12 @@ import { MEMBERS} from './mock-members';
 
 @Injectable()
 export class MemberService {
-  getMember(): Promise<Member[]> {
+  getMembers(): Promise<Member[]> {
     return Promise.resolve(MEMBERS);
   }
+  getMember(id: number): Promise<Member> {
+    return this.getMembers()
+      .then(members => members.find(member => member.id === id));
+  }
 }
+

@@ -1,24 +1,36 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Location} from '@angular/common';
+import 'rxjs/add/operator/switchMap';
 import { Member} from './member';
+import { MemberService } from './member.service';
 
 @Component({
   // <member-detail></member-detail>
   selector: 'member-detail',
-  template: `
-    <!--    表示の出し分け-->
-    <div *ngIf="member">
-      <h2>{{member.name}}</h2>
-      <div><label>id: </label>{{member.id}}
-      </div>
-      <div>
-        <label>name: </label>
-        <input type="text" [(ngModel)]="member.name" placeholder="名前">
-      </div>
-    </div>
-  `
+  templateUrl: './member-detail.component.html'
 })
 // exportのおかげで外部参照可能
-export class MemberDetailComponent {
+export class MemberDetailComponent implements OnInit {
   // 外部ファイルのMemberを引き継ぐ。Input moduleが必要
   @Input() member: Member;
+
+  constructor(
+    private memberService: MemberService,
+    // URLのパラメータ参照可能
+    private route: ActivatedRoute,
+    private location: Location,
+  ) {}
+
+  ngOnInit() {
+    this.route.paramMap
+      .switchMap((param: ParamMap) => {
+        return this.memberService.getMember(+param.get('id'));
+      })
+      .subscribe(member => this.member);
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
 }
